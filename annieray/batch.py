@@ -129,7 +129,9 @@ def _load_muon_file(path: Path) -> list:
     """Parse the topology file and populate the global cache."""
     global _MUON_FILE_CACHE
     _MUON_FILE_CACHE = []
-    with open(path) as f:
+
+    "Modifiying to force the proper endcoding of the read in file"
+    with open(path,"r",encoding="utf-16") as f:
         for line_no, line in enumerate(f):
             line = line.strip()
             if not line or line.startswith("#"):
