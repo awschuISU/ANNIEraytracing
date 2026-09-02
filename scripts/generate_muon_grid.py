@@ -18,8 +18,8 @@ import argparse
 import itertools
 import math
 
-NX = 13
-NZ = 13
+NX = 9
+NZ = 9
 X_MIN, X_MAX = -1200.0, 1200.0
 Z_MIN, Z_MAX = 300.0, 2700.0
 Y = 0.0
