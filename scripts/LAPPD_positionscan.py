@@ -60,10 +60,13 @@ def main() -> None:
 
     # ── Load ──────────────────────────────────────────────────────
 
-    #This should only be used for small .h5 files. If they are big it will cause problems as .txt is not as efficient. 
-    #txt_path = h5_path.with_suffix(".txt")
-    #dump_h5_to_txt(h5_path, txt_path)
-    #print(f"Wrote HDF5 contents to {txt_path}")  
+    #NOTE: This should only be used for small .h5 files. If they are big it will cause problems as .txt is not as efficient. 
+    enable_txt = False
+    if enable_txt == True:
+        txt_path = h5_path.with_suffix(".txt")
+        dump_h5_to_txt(h5_path, txt_path)
+        print(f"Wrote HDF5 contents to {txt_path}") 
+   
 
     hits = load_table(h5_path, "photon_hits")
     if hits.empty:
