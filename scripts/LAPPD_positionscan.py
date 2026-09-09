@@ -61,7 +61,7 @@ def main() -> None:
     # ── Load ──────────────────────────────────────────────────────
 
     #NOTE: This should only be used for small .h5 files. If they are big it will cause problems as .txt is not as efficient. 
-    enable_txt = False
+    enable_txt = True
     if enable_txt == True:
         txt_path = h5_path.with_suffix(".txt")
         dump_h5_to_txt(h5_path, txt_path)
