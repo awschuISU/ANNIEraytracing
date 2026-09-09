@@ -18,6 +18,27 @@ from matplotlib import colors
 
 from annieray.io_h5 import load_table
 
+import h5py
+
+#This allows for a text file to be made from the .h5 outputs
+def dump_h5_to_txt(h5_path: Path, txt_path: Path) -> None:
+    """Write every group, dataset, attribute, and value from an HDF5 file."""
+    with h5py.File(h5_path, "r") as h5, txt_path.open("w", encoding="utf-8") as out:
+
+        def write_item(name, obj):
+            out.write(f"\n[{name}]\n")
+
+            for key, value in obj.attrs.items():
+                out.write(f"attribute {key} = {value!r}\n")
+
+            if isinstance(obj, h5py.Dataset):
+                out.write(f"shape = {obj.shape}\n")
+                out.write(f"dtype = {obj.dtype}\n")
+                out.write(f"{np.asarray(obj[()])}\n")
+
+        h5.visititems(write_item)
+   
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -38,6 +59,12 @@ def main() -> None:
     print(f"HDF5: {h5_path}")
 
     # ── Load ──────────────────────────────────────────────────────
+
+    #This should only be used for small .h5 files. If they are big it will cause problems as .txt is not as efficient. 
+    #txt_path = h5_path.with_suffix(".txt")
+    #dump_h5_to_txt(h5_path, txt_path)
+    #print(f"Wrote HDF5 contents to {txt_path}")  
+
     hits = load_table(h5_path, "photon_hits")
     if hits.empty:
         print("No photon_hits found.")
